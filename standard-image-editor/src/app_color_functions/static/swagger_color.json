@@ -1,0 +1,260 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Color App Functions Swagger",
+    "description": "Documentation of Color App API for image conversion and processing",
+    "version": "1.0.0"    
+  },
+  "tags": [
+    {
+      "name": "Color codes request API",
+      "description": "Requests that provide color code infromation of the processed images"
+    },
+    {
+      "name": "RGB request API",
+      "description": "Requests that provide RBG infromation of the processed images"
+    },
+  ],
+  "components": {
+    "schemas": {
+      "ColorRequestBody": {
+        "type": "object",
+        "properties": {
+          "images_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "example": ["1.jpeg", "2.jpeg"]
+          },
+          "occurrence_threshold": {
+            "type": "integer",
+            "description": "Only occurances over the threshold will be registered in the file",
+            "example": 500
+          }
+        }
+      },
+      "RGBRequestBody": {
+        "type": "object",
+        "properties": {
+          "images_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "example": ["1.jpeg", "2.jpeg"]
+          },
+          "greyscale_flag": {
+            "type": "boolean",
+            "description": "If set to true, generated results will be converted to grayscale"
+          }
+        }
+      },
+      "OKResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "All images processed successfully!"
+          },
+          "valid_outputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Some images could not be processed!"
+          },
+          "valid_outputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          },
+          "invalid_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "bad input file path"
+            }
+          }
+        }
+      },
+    }
+  },
+  "paths": {
+    "/color-codes-text": {
+      "post": {
+        "tags": [
+            "Color codes request API"
+        ],
+        "summary": "Generate hex color codes occurrences",
+        "description": "Generate an output file that contains the occurrences of each hex color within the given image",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ColorRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/color-codes-chart": {
+      "post": {
+        "tags": [
+            "Color codes request API"
+        ],
+        "summary": "Generate color codes chart",
+        "requestBody": {
+          "description": "Generate color codes pie chart based on occurance level",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ColorRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rgb-channels": {
+      "post": {
+        "tags": [
+            "RGB request API"
+        ],
+        "summary": "Generate RGB channels",
+        "requestBody": {
+          "description": "Generate RGB channels",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RGBRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rgb-histogram": {
+      "post": {
+        "tags": [
+            "RGB request API"
+        ],
+        "summary": "Generate RGB histogram",
+        "requestBody": {
+          "description": "Generate RGB histogram",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RGBRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+  }
+}

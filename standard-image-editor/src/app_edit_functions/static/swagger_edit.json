@@ -1,0 +1,280 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Edit App Functions Swagger",
+    "description": "Documentation of Edit App API for image conversion and processing",
+    "version": "1.0.0"    
+  },
+  "tags": [
+    {
+      "name": "Flip request API",
+      "description": "Requests that flip given images in specified directions"
+    },
+    {
+      "name": "Rotate request API",
+      "description": "Requests that rotate given images in specified directions"
+    },
+  ],
+  "components": {
+    "schemas": {
+      "EditRequestBody": {
+        "type": "object",
+        "properties": {
+          "images_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "example": ["1.jpeg", "2.jpeg"]
+          }
+        }
+      },
+      "OKResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "All images processed successfully!"
+          },
+          "valid_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Some images could not be processed!"
+          },
+          "valid_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          },
+          "invalid_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "bad input file path"
+            }
+          }
+        }
+      },
+    }
+  },
+  "paths": {
+    "/flip-horizontal": {
+      "patch": {
+        "tags": [
+            "Flip request API"
+        ],
+        "summary": "Flip images horizontal",
+        "requestBody": {
+          "description": "Flip given images horizontal",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flip-vertical": {
+      "patch": {
+        "tags": [
+            "Flip request API"
+        ],
+        "summary": "Flip images vertical",
+        "requestBody": {
+          "description": "Flip given images vertical",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rotate-clockwise": {
+      "patch": {
+        "tags": [
+            "Rotate request API"
+        ],
+        "summary": "Rotate images clockwise",
+        "requestBody": {
+          "description": "Rotate given images clockwise",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rotate-cclockwise": {
+      "patch": {
+        "tags": [
+            "Rotate request API"
+        ],
+        "summary": "Rotate images counter clockwise",
+        "requestBody": {
+          "description": "Rotate given images counter clockwise",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rotate-180": {
+      "patch": {
+        "tags": [
+            "Rotate request API"
+        ],
+        "summary": "Rotate images 180 degrees",
+        "requestBody": {
+          "description": "Rotate given images 180 degrees",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

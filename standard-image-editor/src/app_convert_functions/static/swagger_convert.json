@@ -1,0 +1,117 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Convert App Functions Swagger",
+    "description": "Documentation of Convert App API for image conversion and processing",
+    "version": "1.0.0"    
+  },
+  "tags": [
+    {
+      "name": "Convert image request API",
+      "description": "Requests that convert images to another format"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "ConvertRequestBody": {
+        "type": "object",
+        "properties": {
+          "images_paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "example": ["1.jpeg", "2.jpeg"]
+          },
+          "format": {
+            "type": "string",
+            "description": "Format used for image conversion",
+            "enum": [".jpeg", ".png", ".ppm", ".gif", ".tiff", ".bmp"]
+          }
+        }
+      },
+      "OKResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "All images processed successfully!"
+          },
+          "valid_converted_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Some images could not be processed!"
+          },
+          "valid_converted_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "output file path"
+            }
+          },
+          "invalid_images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "bad input file path"
+            }
+          }
+        }
+      },
+    }
+  },
+  "paths": {
+    "/convert-type": {
+      "patch": {
+        "tags": [
+            "Convert image request API"
+        ],
+        "summary": "Convert images to given format",
+        "requestBody": {
+          "description": "Convert images to given in request body to supported format",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConvertRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OKResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
