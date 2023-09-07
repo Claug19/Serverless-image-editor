@@ -53,7 +53,7 @@ def test_patch_flip_horziontal_ok(json_edit_image):
 
     assert response.status_code == 200
 
-    output = open("performance/flip_horziontal.txt", "a")
+    output = open("time_results/flip_horziontal.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()
 
@@ -71,7 +71,7 @@ def test_patch_flip_vertical_ok(json_edit_image):
 
     assert response.status_code == 200
 
-    output = open("performance/flip_vertical.txt", "a")
+    output = open("time_results/flip_vertical.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()
 
@@ -89,7 +89,7 @@ def test_patch_rotate_c_ok(json_edit_image):
 
     assert response.status_code == 200
 
-    output = open("performance/rotate_clockwise.txt", "a")
+    output = open("time_results/rotate_clockwise.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()
 
@@ -107,7 +107,7 @@ def test_patch_rotate_cc_ok(json_edit_image):
 
     assert response.status_code == 200
 
-    output = open("performance/rotate_cclockwise.txt", "a")
+    output = open("time_results/rotate_cclockwise.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()
 
@@ -125,6 +125,6 @@ def test_patch_rotate_180_ok(json_edit_image):
 
     assert response.status_code == 200
 
-    output = open("performance/rotate_180.txt", "a")
+    output = open("time_results/rotate_180.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()

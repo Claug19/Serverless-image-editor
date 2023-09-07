@@ -62,8 +62,8 @@ def test_patch_convert_type_ok(json_convert_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/convert_type.txt", "a")
-    output2 = open("memory_max/convert_type.txt", "a")
+    output1 = open("memory_delta_results/convert_type.txt", "a")
+    output2 = open("memory_max_results/convert_type.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")

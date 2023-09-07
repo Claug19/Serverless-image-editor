@@ -63,8 +63,8 @@ def test_patch_resize_image_ok(json_size_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/resize_image.txt", "a")
-    output2 = open("memory_max/resize_image.txt", "a")
+    output1 = open("memory_delta_results/resize_image.txt", "a")
+    output2 = open("memory_max_results/resize_image.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")

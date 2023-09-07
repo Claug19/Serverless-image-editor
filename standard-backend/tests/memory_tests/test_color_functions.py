@@ -70,8 +70,8 @@ def test_post_create_color_codes_text_ok(json_color_codes, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/color_codes_text.txt", "a")
-    output2 = open("memory_max/color_codes_text.txt", "a")
+    output1 = open("memory_delta_results/color_codes_text.txt", "a")
+    output2 = open("memory_max_results/color_codes_text.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -92,8 +92,8 @@ def test_post_create_color_codes_chart_ok(json_color_codes, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/color_codes_chart.txt", "a")
-    output2 = open("memory_max/color_codes_chart.txt", "a")
+    output1 = open("memory_delta_results/color_codes_chart.txt", "a")
+    output2 = open("memory_max_results/color_codes_chart.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -114,8 +114,8 @@ def test_post_create_rgb_channels_ok(json_rgb, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/rgb_channels.txt", "a")
-    output2 = open("memory_max/rgb_channels.txt", "a")
+    output1 = open("memory_delta_results/rgb_channels.txt", "a")
+    output2 = open("memory_max_results/rgb_channels.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -136,8 +136,8 @@ def test_post_create_rgb_histogram_ok(json_rgb, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/rgb_histogram.txt", "a")
-    output2 = open("memory_max/rgb_histogram.txt", "a")
+    output1 = open("memory_delta_results/rgb_histogram.txt", "a")
+    output2 = open("memory_max_results/rgb_histogram.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")

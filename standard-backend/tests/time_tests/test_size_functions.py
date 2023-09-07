@@ -55,6 +55,6 @@ def test_patch_resize_image_ok(json_size_image):
 
     assert response.status_code == 200
 
-    output = open("performance/resize_image.txt", "a")
+    output = open("time_results/resize_image.txt", "a")
     output.write(response.headers["total_time"] + " ")
     output.close()

@@ -61,8 +61,8 @@ def test_patch_flip_horziontal_ok(json_edit_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/flip_horziontal.txt", "a")
-    output2 = open("memory_max/flip_horziontal.txt", "a")
+    output1 = open("memory_delta_results/flip_horziontal.txt", "a")
+    output2 = open("memory_max_results/flip_horziontal.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -83,8 +83,8 @@ def test_patch_flip_vertical_ok(json_edit_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/flip_vertical.txt", "a")
-    output2 = open("memory_max/flip_vertical.txt", "a")
+    output1 = open("memory_delta_results/flip_vertical.txt", "a")
+    output2 = open("memory_max_results/flip_vertical.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -105,8 +105,8 @@ def test_patch_rotate_c_ok(json_edit_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/rotate_clockwise.txt", "a")
-    output2 = open("memory_max/rotate_clockwise.txt", "a")
+    output1 = open("memory_delta_results/rotate_clockwise.txt", "a")
+    output2 = open("memory_max_results/rotate_clockwise.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -127,8 +127,8 @@ def test_patch_rotate_cc_ok(json_edit_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/rotate_cclockwise.txt", "a")
-    output2 = open("memory_max/rotate_cclockwise.txt", "a")
+    output1 = open("memory_delta_results/rotate_cclockwise.txt", "a")
+    output2 = open("memory_max_results/rotate_cclockwise.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
@@ -149,8 +149,8 @@ def test_patch_rotate_180_ok(json_edit_image, memory_header):
 
     assert response.status_code == 200
 
-    output1 = open("memory_delta/rotate_180.txt", "a")
-    output2 = open("memory_max/rotate_180.txt", "a")
+    output1 = open("memory_delta_results/rotate_180.txt", "a")
+    output2 = open("memory_max_results/rotate_180.txt", "a")
     output1.write(response.headers["memory_spike"] + " ")
     output1.close()
     output2.write(response.headers["memory_peak"] + " ")
