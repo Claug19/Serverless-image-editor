@@ -1,13 +1,11 @@
 # packages
 import io
 import json
-import sys
 from PIL import Image
 
-sys.path.append('../..')
-
 # local
-from src.common import common_functions as common, file_manager as fm
+import common_functions as common
+import file_manager as fm
 
 
 def handle_add_image(file_name: str, file_content: str, extension: str) -> tuple:

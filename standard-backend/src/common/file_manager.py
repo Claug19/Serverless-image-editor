@@ -4,12 +4,14 @@ import json
 import os
 import sys
 from io import BytesIO
+
+import botocore
 from PIL import Image
 
 sys.path.append('..')
 
 # local
-from src.common import configuration
+from src.common import configuration, common_functions as common
 
 # ===========================
 #       paths variables
@@ -134,8 +136,13 @@ def write_image_to_s3(image, key: str, new_format: str):
     s3_client = boto3.client('s3')
     file_stream = BytesIO()
     image.save(file_stream, format=new_format)
-    s3_client.put_object(Body=file_stream.getvalue(), Bucket=get_bucket_name(), Key=key,
-                         ContentType='image/' + new_format)
+    try:
+        s3_client.put_object(Body=file_stream.getvalue(), Bucket=get_bucket_name(), Key=key,
+                             ContentType='image/' + new_format)
+    except botocore.exceptions.ClientError as error:
+        # Put your error handling logic here
+        common.log(error)
+        raise error
 
 
 def write_image_buffer_to_s3(image_buffer, key: str, new_format: str):
@@ -148,6 +155,7 @@ def write_text_to_s3(text, key: str):
     s3_client = boto3.client('s3')
     s3_client.put_object(Body=text, Bucket=get_bucket_name(), Key=key,
                          ContentType='text/plain')
+
 
 # ==========================
 #       image managing

@@ -39,11 +39,6 @@ Resources:
               - s3:PutObject
             Resource: "arn:aws:s3:::images-editor-app-bucket/*"
       Events:
-        Swagger:
-          Type: Api
-          Properties:
-            Path: /swagger-color
-            Method: GET
         ColorCodesText:
           Type: Api
           Properties:
@@ -84,11 +79,6 @@ Resources:
               - s3:PutObject
             Resource: "arn:aws:s3:::images-editor-app-bucket/*"
       Events:
-        Swagger:
-          Type: Api
-          Properties:
-            Path: /swagger-convert
-            Method: GET
         ConvertType:
           Type: Api
           Properties:
@@ -109,11 +99,6 @@ Resources:
               - s3:PutObject
             Resource: "arn:aws:s3:::images-editor-app-bucket/*"
       Events:
-        Swagger:
-          Type: Api
-          Properties:
-            Path: /swagger-edit
-            Method: GET
         FlipHorizontal:
           Type: Api
           Properties:
@@ -139,6 +124,26 @@ Resources:
           Properties:
             Path: /rotate-180
             Method: PATCH
+  AppManageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: app_manage_images.app
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Policies:
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+            Resource: "arn:aws:s3:::images-editor-app-bucket/*"
+      Events:
+        ResizeImage:
+          Type: Api
+          Properties:
+            Path: /add-image
+            Method: POST
   AppSizeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -154,11 +159,6 @@ Resources:
               - s3:PutObject
             Resource: "arn:aws:s3:::images-editor-app-bucket/*"
       Events:
-        Swagger:
-          Type: Api
-          Properties:
-            Path: /swagger-size
-            Method: GET
         ResizeImage:
           Type: Api
           Properties:
@@ -201,6 +201,12 @@ Outputs:
   AppEditFunctionIamRole:
     Description: Implicit IAM Role created for AppEdit function
     Value: !GetAtt AppEditFunctionRole.Arn
+  AppManageFunction:
+    Description: AppManage Lambda Function ARN
+    Value: !GetAtt AppManageFunction.Arn
+  AppManageFunctionIamRole:
+    Description: Implicit IAM Role created for AppManage function
+    Value: !GetAtt AppManageFunctionRole.Arn
   AppSizeFunction:
     Description: AppSize Lambda Function ARN
     Value: !GetAtt AppSizeFunction.Arn

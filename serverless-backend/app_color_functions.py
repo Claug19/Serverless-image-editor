@@ -1,10 +1,8 @@
 # packages
-import os
 import time
 import tracemalloc
 from flask import Flask, request, g
 from flask_lambda import FlaskLambda
-from flask_swagger_ui import get_swaggerui_blueprint
 
 # local
 import common_functions as common
@@ -13,7 +11,6 @@ import handler_color_codes
 import handler_rgb_channels
 import handler_rgb_histograms
 
-ongoing_requests = {"0": ""}
 
 common.log("Lambda FLASK: color")
 app = FlaskLambda(__name__)
@@ -45,14 +42,6 @@ def teardown_procedure(response):
         response.headers['memory_spike'] = memory_peak - memory_current
         response.headers['memory_peak'] = memory_peak
     return response
-
-
-# app_color_functions swagger
-SWAGGER_URL = '/swagger-color'
-API_URL = '/static/swagger_color.json'
-SWAGGER_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name': "app_color_functions"})
-
-app.register_blueprint(SWAGGER_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 
 # routes
@@ -118,25 +107,10 @@ def post_create_rgb_histograms() -> tuple:
     common.log(post_create_rgb_histograms.__name__)
     mandatory_parameters = ["images_paths"]
 
-    process_id = int(sorted(ongoing_requests.keys())[-1]) + 1
-    try:
-        data = {"process_id" : process_id}
-        return json.dumps(data), 200, {'Content-Type': 'application/json'}
-    finally:
-        for mandatory_parameter in mandatory_parameters:
-            if mandatory_parameter not in request.json:
-                ongoing_requests[str(process_id)] = common.respond_bad_request_missing(mandatory_parameter)
+    for mandatory_parameter in mandatory_parameters:
+        if mandatory_parameter not in request.json:
+            return common.respond_bad_request_missing(mandatory_parameter)
 
-        images_paths = request.json["images_paths"]
+    images_paths = request.json["images_paths"]
 
-        ongoing_requests[str(process_id)] = handler_rgb_histograms.handle_post_rgb_histograms(images_paths)
-
-
-@app.route('/get-result', methods=['GET'])
-def post_create_rgb_histograms() -> tuple:
-    common.log(post_create_rgb_histograms.__name__)
-    if str(request.args.get("id")) in ongoing_requests:
-        return ongoing_requests[str(request.args.get("id"))]
-    else:
-        data = {"error" : "No process found for given id"}
-        return (json.dumps(data), 400, {'Content-Type': 'application/json'})
+    return handler_rgb_histograms.handle_post_rgb_histograms(images_paths)

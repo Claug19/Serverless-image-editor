@@ -1,10 +1,8 @@
 # packages
-import os
 import time
 import tracemalloc
 from flask import Flask, request, g
 from flask_lambda import FlaskLambda
-from flask_swagger_ui import get_swaggerui_blueprint
 
 # local
 import common_functions as common
@@ -18,8 +16,6 @@ app = FlaskLambda(__name__)
 
 @app.before_request
 def setup_procedure():
-    # os.environ["AWS_ACCESS_KEY_ID"] = "AKIATNQOBGACFYVGPIXR"
-    # os.environ["AWS_SECRET_ACCESS_KEY"] = "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"
     common.log("setup " + request.method + " " +request.path)
     # memory
     if request.headers.get("Memory-Test") == "True":
@@ -43,14 +39,6 @@ def teardown_procedure(response):
         response.headers['memory_spike'] = memory_peak - memory_current
         response.headers['memory_peak'] = memory_peak
     return response
-
-
-# app_size_functions swagger
-SWAGGER_URL = '/swagger-size'
-API_URL = '/static/swagger_size.json'
-SWAGGER_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name': "app_size_functions"})
-
-app.register_blueprint(SWAGGER_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 
 # routes

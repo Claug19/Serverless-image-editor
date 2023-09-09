@@ -1,10 +1,8 @@
 # packages
-import os
 import time
 import tracemalloc
 from flask import Flask, request, g
 from flask_lambda import FlaskLambda
-from flask_swagger_ui import get_swaggerui_blueprint
 
 # local
 import common_functions as common
@@ -43,14 +41,6 @@ def teardown_procedure(response):
         response.headers['memory_spike'] = memory_peak - memory_current
         response.headers['memory_peak'] = memory_peak
     return response
-
-
-# app_edit_functions swagger
-SWAGGER_URL = '/swagger-edit'
-API_URL = '/static/swagger_edit.json'
-SWAGGER_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name': "app_edit_functions"})
-
-app.register_blueprint(SWAGGER_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 
 # routes

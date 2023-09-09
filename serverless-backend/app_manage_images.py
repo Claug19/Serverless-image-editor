@@ -1,4 +1,5 @@
 # packages
+import base64
 import time
 import tracemalloc
 from flask import Flask, request, g
@@ -7,16 +8,15 @@ from flask_lambda import FlaskLambda
 # local
 import common_functions as common
 import file_manager as fm
-import handler_convert_images
+import handler_manage_images
 
 
-common.log("Lambda FLASK: convert")
+common.log("Lambda FLASK: manage")
 app = FlaskLambda(__name__)
 
 
 @app.before_request
 def setup_procedure():
-    common.log("setup " + request.method + " " +request.path)
     # memory
     if request.headers.get("Memory-Test") == "True":
         tracemalloc.start()
@@ -26,7 +26,6 @@ def setup_procedure():
 
 @app.after_request
 def teardown_procedure(response):
-    common.log("setup " + request.method + " " +request.path)
     # time
     total_time = time.perf_counter() - g.start_time
     time_in_ms = int(total_time * 1000)
@@ -42,22 +41,33 @@ def teardown_procedure(response):
     return response
 
 
-# routes
-@app.route('/convert-type', methods=['PATCH'])
-def patch_convert_type() -> tuple:
-    common.log(patch_convert_type.__name__)
-    mandatory_parameters = ["images_paths", "format"]
+@app.route('/add-image', methods=['POST'])
+def post_add_image() -> tuple:
+    common.log(post_add_image.__name__)
+
+    mandatory_parameters = ["name", "content"]
 
     for mandatory_parameter in mandatory_parameters:
         if mandatory_parameter not in request.json:
             return common.respond_bad_request_missing(mandatory_parameter)
 
-    images_paths = request.json["images_paths"]
-    new_format = request.json["format"]
+    file_name = request.json["name"]
+    file_content = base64.b64decode(request.json["content"])
 
-    if not common.validate_image_format(new_format):
+    if file_name == '':
+        common.log('Error: No selected file')
+        return common.respond_bad_request_missing('filename')
+
+    if file_content == '':
+        common.log('Error: Empty file')
+        return common.respond_bad_request_missing('file content')
+
+    extension = file_name.split('.')[1]
+
+    if not common.validate_image_format("." + extension):
         parameter = "format"
-        details = new_format + " is not a supported image extension"
+        details = extension + " is not a supported image extension"
         return common.respond_bad_request_invalid(parameter, details)
 
-    return handler_convert_images.handle_patch_convert_image(images_paths, new_format)
+    # save  to s3
+    return handler_manage_images.handle_add_image(file_name, file_content, extension)
