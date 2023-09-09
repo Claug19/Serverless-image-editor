@@ -1,4 +1,4 @@
 .git
-**/__pycache__/*
-**/.idea/*
-**/.aws-sam/*
+**/__pycache__/
+**/.idea/
+**/.aws-sam/
